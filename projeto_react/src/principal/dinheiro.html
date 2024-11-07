@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Financeiro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+    }
+    .saldo {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      font-size: 1em;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+    button.adicionar {
+      background-color: #4CAF50;
+      color: white;
+    }
+    button.retirar {
+      background-color: #f44336;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sistema Financeiro</h2>
+    <p class="saldo">Saldo atual: R$<span id="saldo">0.00</span></p>
+
+    <input type="number" id="valor" placeholder="Valor" />
+    <select id="metodo">
+      <option value="PIX">PIX</option>
+      <option value="Cartão">Cartão</option>
+      <option value="Boleto">Boleto</option>
+    </select>
+
+    <button class="adicionar" onclick="adicionarDinheiro()">Adicionar Dinheiro</button>
+    <button class="retirar" onclick="retirarDinheiro()">Retirar Dinheiro (PIX)</button>
+  </div>
+
+  <script>
+    let saldo = 0;
+
+    function atualizarSaldo() {
+      document.getElementById('saldo').textContent = saldo.toFixed(2);
+    }
+
+    function adicionarDinheiro() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const metodo = document.getElementById('metodo').value;
+
+      if (isNaN(valor) || valor <= 0) {
+        alert("Por favor, insira um valor válido.");
+        return;
+      }
+
+      saldo += valor;
+      atualizarSaldo();
+      alert(`R$${valor.toFixed(2)} adicionado com sucesso pelo método ${metodo}.`);
+      document.getElementById('valor').value = '';
+    }
+
+    function retirarDinheiro() {
+      const valor = parseFloat(document.getElementById('valor').value);
+
+      if (isNaN(valor) || valor <= 0) {
+        alert("Por favor, insira um valor válido.");
+        return;
+      }
+
+      if (valor > saldo) {
+        alert("Saldo insuficiente para retirada.");
+        return;
+      }
+
+      saldo -= valor;
+      atualizarSaldo();
+      alert(`R$${valor.toFixed(2)} retirado com sucesso via PIX.`);
+      document.getElementById('valor').value = '';
+    }
+  </script>
+</body>
+</html>
