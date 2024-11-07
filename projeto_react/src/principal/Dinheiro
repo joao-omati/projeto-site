@@ -1,0 +1,70 @@
+import React, { useState } from 'react';
+
+function SistemaFinanceiro() {
+  const [saldo, setSaldo] = useState(0);
+  const [valor, setValor] = useState('');
+  const [metodo, setMetodo] = useState('PIX');
+
+  // Função para adicionar dinheiro
+  const adicionarDinheiro = () => {
+    const valorNumerico = parseFloat(valor);
+    if (isNaN(valorNumerico) || valorNumerico <= 0) {
+      alert("Por favor, insira um valor válido.");
+      return;
+    }
+    setSaldo(saldo + valorNumerico);
+    setValor('');
+    alert(`R$${valorNumerico} adicionado com sucesso pelo método ${metodo}.`);
+  };
+
+  // Função para retirar dinheiro com PIX
+  const retirarDinheiro = () => {
+    const valorNumerico = parseFloat(valor);
+    if (isNaN(valorNumerico) || valorNumerico <= 0) {
+      alert("Por favor, insira um valor válido.");
+      return;
+    }
+    if (valorNumerico > saldo) {
+      alert("Saldo insuficiente para retirada.");
+      return;
+    }
+    setSaldo(saldo - valorNumerico);
+    setValor('');
+    alert(`R$${valorNumerico} retirado com sucesso via PIX.`);
+  };
+
+  return (
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <h2>Sistema Financeiro</h2>
+      <p>Saldo atual: R${saldo.toFixed(2)}</p>
+
+      <input
+        type="number"
+        value={valor}
+        onChange={(e) => setValor(e.target.value)}
+        placeholder="Valor"
+        style={{ marginRight: '10px' }}
+      />
+
+      <select
+        value={metodo}
+        onChange={(e) => setMetodo(e.target.value)}
+        style={{ marginRight: '10px' }}
+      >
+        <option value="PIX">PIX</option>
+        <option value="Cartão">Cartão</option>
+        <option value="Boleto">Boleto</option>
+      </select>
+
+      <button onClick={adicionarDinheiro} style={{ marginRight: '10px' }}>
+        Adicionar Dinheiro
+      </button>
+
+      {metodo === 'PIX' && (
+        <button onClick={retirarDinheiro}>Retirar Dinheiro (PIX)</button>
+      )}
+    </div>
+  );
+}
+
+export default SistemaFinanceiro;
