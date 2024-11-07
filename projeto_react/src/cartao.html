@@ -82,6 +82,8 @@
     <!-- Seção para adicionar um cartão de crédito -->
     <div class="section">
       <h3>Adicionar Cartão de Crédito</h3>
+      <label for="nome-cartao">Nome do Cartão</label>
+      <input type="text" id="nome-cartao" placeholder="Digite um nome para o cartão" maxlength="20" />
       <label for="numero-cartao">Número do Cartão</label>
       <input type="text" id="numero-cartao" placeholder="Digite o número do cartão" maxlength="16" />
       <button class="primary" onclick="adicionarCartao()">Adicionar Cartão</button>
@@ -90,6 +92,7 @@
     <!-- Seção para adicionar saldo na conta usando o cartão -->
     <div id="cartao-info" style="display: none;">
       <div class="info">
+        <p>Cartão salvo: <span id="nome-cartao-salvo"></span> (**** **** **** <span id="ultimos-digitos"></span>)</p>
         Saldo Atual: R$<span id="saldo">0.00</span>
       </div>
 
@@ -114,18 +117,29 @@
     let cartaoAdicionado = false;
 
     function adicionarCartao() {
-      const numeroCartao = document.getElementById('numero-cartao').value;
+      const nomeCartao = document.getElementById('nome-cartao').value.trim();
+      const numeroCartao = document.getElementById('numero-cartao').value.trim();
 
-      if (numeroCartao.length !== 16) {
-        alert("Por favor, insira um número de cartão válido.");
+      if (numeroCartao.length !== 16 || isNaN(numeroCartao)) {
+        alert("Por favor, insira um número de cartão válido com 16 dígitos.");
         return;
       }
+
+      if (!nomeCartao) {
+        alert("Por favor, insira um nome para o cartão.");
+        return;
+      }
+
+      // Exibe as últimas quatro dígitos do cartão e o nome dado pelo cliente
+      document.getElementById('nome-cartao-salvo').textContent = nomeCartao;
+      document.getElementById('ultimos-digitos').textContent = numeroCartao.slice(-4);
 
       // Exibe a seção de saldo e operações após adicionar o cartão
       document.getElementById('cartao-info').style.display = 'block';
       alert("Cartão adicionado com sucesso!");
 
-      // Limpa o campo de entrada do número do cartão
+      // Limpa os campos de entrada do número do cartão e nome do cartão
+      document.getElementById('nome-cartao').value = '';
       document.getElementById('numero-cartao').value = '';
       cartaoAdicionado = true;
     }
