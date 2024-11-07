@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Financeiro - Cartão de Crédito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    .info {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .info span {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+    }
+    button.primary {
+      background-color: #28a745;
+      color: white;
+    }
+    button.secondary {
+      background-color: #007bff;
+      color: white;
+    }
+    .transacao {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.9em;
+    }
+    .transacao-positivo {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cartão de Crédito</h2>
+
+    <!-- Seção para adicionar um cartão de crédito -->
+    <div class="section">
+      <h3>Adicionar Cartão de Crédito</h3>
+      <label for="numero-cartao">Número do Cartão</label>
+      <input type="text" id="numero-cartao" placeholder="Digite o número do cartão" maxlength="16" />
+      <button class="primary" onclick="adicionarCartao()">Adicionar Cartão</button>
+    </div>
+
+    <!-- Seção para adicionar saldo na conta usando o cartão -->
+    <div id="cartao-info" style="display: none;">
+      <div class="info">
+        Saldo Atual: R$<span id="saldo">0.00</span>
+      </div>
+
+      <div class="section">
+        <h3>Adicionar Saldo à Conta</h3>
+        <label for="valor-adicionar">Valor a Adicionar (R$)</label>
+        <input type="number" id="valor-adicionar" placeholder="Digite o valor a adicionar" />
+        <button class="secondary" onclick="adicionarSaldo()">Adicionar à Conta</button>
+      </div>
+
+      <div class="section">
+        <h3>Histórico de Transações</h3>
+        <div id="historico-transacoes">
+          <!-- Histórico de transações será exibido aqui -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let saldo = 0;
+    let cartaoAdicionado = false;
+
+    function adicionarCartao() {
+      const numeroCartao = document.getElementById('numero-cartao').value;
+
+      if (numeroCartao.length !== 16) {
+        alert("Por favor, insira um número de cartão válido.");
+        return;
+      }
+
+      // Exibe a seção de saldo e operações após adicionar o cartão
+      document.getElementById('cartao-info').style.display = 'block';
+      alert("Cartão adicionado com sucesso!");
+
+      // Limpa o campo de entrada do número do cartão
+      document.getElementById('numero-cartao').value = '';
+      cartaoAdicionado = true;
+    }
+
+    function atualizarSaldo() {
+      document.getElementById('saldo').textContent = saldo.toFixed(2);
+    }
+
+    function adicionarSaldo() {
+      if (!cartaoAdicionado) {
+        alert("Por favor, adicione um cartão primeiro.");
+        return;
+      }
+
+      const valorAdicionar = parseFloat(document.getElementById('valor-adicionar').value);
+
+      if (isNaN(valorAdicionar) || valorAdicionar <= 0) {
+        alert("Por favor, insira um valor válido.");
+        return;
+      }
+
+      // Atualiza o saldo da conta
+      saldo += valorAdicionar;
+      adicionarTransacao(valorAdicionar, 'Adição de Saldo');
+      atualizarSaldo();
+
+      alert(`Valor de R$${valorAdicionar.toFixed(2)} adicionado com sucesso!`);
+      document.getElementById('valor-adicionar').value = '';
+    }
+
+    function adicionarTransacao(valor, descricao) {
+      const historicoTransacoes = document.getElementById('historico-transacoes');
+      const transacao = document.createElement('div');
+      transacao.classList.add('transacao');
+      
+      const descricaoTransacao = document.createElement('p');
+      descricaoTransacao.textContent = descricao;
+
+      const valorTransacao = document.createElement('p');
+      valorTransacao.textContent = `+ R$${valor.toFixed(2)}`;
+      valorTransacao.classList.add('transacao-positivo');
+
+      transacao.appendChild(descricaoTransacao);
+      transacao.appendChild(valorTransacao);
+
+      historicoTransacoes.prepend(transacao); // Adiciona a transação ao topo
+    }
+
+    // Inicializa o saldo na interface
+    atualizarSaldo();
+  </script>
+</body>
+</html>
