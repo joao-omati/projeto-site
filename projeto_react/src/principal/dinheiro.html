@@ -9,105 +9,75 @@
       font-family: Arial, sans-serif;
       background-color: #f4f4f9;
       color: #333;
+      margin: 0;
+      padding: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h2 {
+      color: #333;
+      font-size: 1.8em;
       margin: 0;
     }
-    .container {
+    .options-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .option {
       background-color: #fff;
-      padding: 20px;
+      border: 2px solid #ddd;
       border-radius: 8px;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.1em;
+      color: #333;
+      text-decoration: none;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      width: 100%;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    h2 {
-      text-align: center;
+    .option:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
-    .saldo {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      text-align: center;
+    .option:active {
+      transform: scale(0.98);
     }
-    input, select, button {
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-      font-size: 1em;
-    }
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-    }
-    button.adicionar {
+    .option.adicionar {
       background-color: #4CAF50;
       color: white;
     }
-    button.retirar {
+    .option.retirar {
       background-color: #f44336;
+      color: white;
+    }
+    .option.saldo {
+      background-color: #2196F3;
       color: white;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Sistema Financeiro</h2>
-    <p class="saldo">Saldo atual: R$<span id="saldo">0.00</span></p>
-
-    <input type="number" id="valor" placeholder="Valor" />
-    <select id="metodo">
-      <option value="PIX">PIX</option>
-      <option value="Cartão">Cartão</option>
-      <option value="Boleto">Boleto</option>
-    </select>
-
-    <button class="adicionar" onclick="adicionarDinheiro()">Adicionar Dinheiro</button>
-    <button class="retirar" onclick="retirarDinheiro()">Retirar Dinheiro (PIX)</button>
+  <div class="header">
+    <h2>Troca Troca Transações</h2>
+    <p>Escolha uma opção abaixo:</p>
   </div>
-
-  <script>
-    let saldo = 0;
-
-    function atualizarSaldo() {
-      document.getElementById('saldo').textContent = saldo.toFixed(2);
-    }
-
-    function adicionarDinheiro() {
-      const valor = parseFloat(document.getElementById('valor').value);
-      const metodo = document.getElementById('metodo').value;
-
-      if (isNaN(valor) || valor <= 0) {
-        alert("Por favor, insira um valor válido.");
-        return;
-      }
-
-      saldo += valor;
-      atualizarSaldo();
-      alert(`R$${valor.toFixed(2)} adicionado com sucesso pelo método ${metodo}.`);
-      document.getElementById('valor').value = '';
-    }
-
-    function retirarDinheiro() {
-      const valor = parseFloat(document.getElementById('valor').value);
-
-      if (isNaN(valor) || valor <= 0) {
-        alert("Por favor, insira um valor válido.");
-        return;
-      }
-
-      if (valor > saldo) {
-        alert("Saldo insuficiente para retirada.");
-        return;
-      }
-
-      saldo -= valor;
-      atualizarSaldo();
-      alert(`R$${valor.toFixed(2)} retirado com sucesso via PIX.`);
-      document.getElementById('valor').value = '';
-    }
-  </script>
+  <div class="options-container">
+    <a href="adicionar.html" class="option adicionar">Adicionar Dinheiro</a>
+    <a href="retirar.html" class="option retirar">Retirar Dinheiro</a>
+    <a href="saldo.html" class="option saldo">Consultar Saldo</a>
+  </div>
 </body>
 </html>
