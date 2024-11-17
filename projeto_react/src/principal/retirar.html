@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #002346;
       margin: 0;
       display: flex;
       align-items: center;
@@ -55,6 +55,43 @@
     button:hover {
       background-color: #c0392b;
     }
+    /* Estilos para os modais (pop-ups) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .modal button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .modal button:hover {
+      background-color: #27ae60;
+    }
+    .modal-error button {
+      background-color: #e74c3c;
+    }
+    .modal-error button:hover {
+      background-color: #c0392b;
+    }
   </style>
 </head>
 <body>
@@ -64,16 +101,65 @@
       <p>Preencha os dados abaixo para retirar dinheiro:</p>
     </div>
     <form onsubmit="retirarDinheiro(event)">
-      <input type="text" id="chavePix" placeholder="Digite sua chave PIX" required>
+      <input type="text" id="chavePix" placeholder="Digite sua chave PIX (CPF)" required>
       <input type="number" id="valor" placeholder="Digite o valor a retirar (R$)" step="0.01" min="1" required>
       <button type="submit">Confirmar Retirada</button>
     </form>
   </div>
 
-  <script>
-    let saldo = 5000.00; // Saldo inicial fictício
+  <!-- Modal de Confirmação -->
+  <div class="modal" id="modalConfirmacao">
+    <div class="modal-content">
+      <h3>Retirada Confirmada!</h3>
+      <p id="mensagemConfirmacao"></p>
+      <button onclick="fecharModal()">Fechar</button>
+    </div>
+  </div>
 
-    function retirarDinheiro(event) {
+  <!-- Modal de Erro para CPF inválido -->
+  <div class="modal modal-error" id="modalErroCPF">
+    <div class="modal-content">
+      <h3>Erro</h3>
+      <p>O CPF inserido é inválido. Por favor, insira um CPF válido.</p>
+      <button onclick="fecharModal()">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    // Função para validar o CPF
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/[^\d]+/g, ''); // Remove tudo que não for número
+
+      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+        return false; // Verifica se é um CPF com todos os números iguais
+      }
+
+      let soma = 0;
+      let resto;
+
+      // Validação do primeiro dígito verificador
+      for (let i = 1; i <= 9; i++) {
+        soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+      }
+      resto = (soma * 10) % 11;
+      if ((resto === 10 || resto === 11) ? 0 : resto !== parseInt(cpf.charAt(9))) {
+        return false;
+      }
+
+      soma = 0;
+      // Validação do segundo dígito verificador
+      for (let i = 1; i <= 10; i++) {
+        soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+      }
+      resto = (soma * 10) % 11;
+      if ((resto === 10 || resto === 11) ? 0 : resto !== parseInt(cpf.charAt(10))) {
+        return false;
+      }
+
+      return true; // CPF válido
+    }
+
+    async function retirarDinheiro(event) {
       event.preventDefault();
 
       const chavePix = document.getElementById("chavePix").value.trim();
@@ -84,20 +170,50 @@
         return;
       }
 
+      // Validação do CPF
+      if (!validarCPF(chavePix)) {
+        // Exibe o modal de erro para CPF inválido
+        document.getElementById('modalErroCPF').style.display = 'flex';
+        return;
+      }
+
       if (isNaN(valor) || valor <= 0) {
         alert("Por favor, insira um valor válido.");
         return;
       }
 
-      if (valor > saldo) {
-        alert("Saldo insuficiente para a retirada.");
-        return;
+      // Enviar a requisição para a API
+      try {
+        const response = await fetch('http://localhost:3000/verificar-saldo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id: 1, valor: valor })  // Supondo que o id do usuário seja 1
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Exibe o modal de sucesso
+          document.getElementById('mensagemConfirmacao').textContent = `R$${valor.toFixed(2)} retirado com sucesso!`;
+          document.getElementById('modalConfirmacao').style.display = 'flex';
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        alert("Ocorreu um erro ao verificar o saldo. Tente novamente mais tarde.");
       }
 
-      saldo -= valor; // Atualizar saldo fictício
-      alert(`R$${valor.toFixed(2)} retirado com sucesso via PIX para a chave: ${chavePix}`);
+      // Limpar os campos
       document.getElementById("chavePix").value = '';
       document.getElementById("valor").value = '';
+    }
+
+    // Função para fechar os modais
+    function fecharModal() {
+      document.getElementById('modalConfirmacao').style.display = 'none';
+      document.getElementById('modalErroCPF').style.display = 'none';
     }
   </script>
 </body>
