@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema</title>
+  <title>Cadastrar Nova Conta</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -83,38 +83,44 @@
 
   <div class="container">
     <div class="header">
-      <h2>Login</h2>
-      <p>Digite suas credenciais para acessar o sistema:</p>
+      <h2>Cadastrar Nova Conta</h2>
+      <p>Preencha os campos abaixo para criar uma nova conta:</p>
     </div>
 
-    <form onsubmit="login(event)">
+    <form onsubmit="cadastrarConta(event)">
+      <input type="text" id="nome" placeholder="Nome Completo" required>
       <input type="email" id="email" placeholder="E-mail" required>
       <input type="password" id="senha" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
+      <input type="password" id="confirmaSenha" placeholder="Confirmar Senha" required>
+      <button type="submit">Cadastrar</button>
     </form>
 
     <div class="footer">
-      <p><a href="cadastro.html">Cadastrar nova conta</a></p>
-      <p><a href="recuperar-senha.html">Esqueceu a senha?</a></p>
+      <p><a href="login.html">Já tem uma conta? Faça login</a></p>
     </div>
   </div>
 
   <script>
-    function login(event) {
+    function cadastrarConta(event) {
       event.preventDefault();
 
+      const nome = document.getElementById('nome').value.trim();
       const email = document.getElementById('email').value.trim();
       const senha = document.getElementById('senha').value.trim();
+      const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
 
-      if (!email || !senha) {
+      if (!nome || !email || !senha || !confirmaSenha) {
         alert('Por favor, preencha todos os campos.');
         return;
       }
 
-      // Aqui você faria a validação com seu backend, por enquanto apenas uma mensagem de sucesso
-      alert('Login realizado com sucesso!');
-      // Redirecionar para a página principal após login bem-sucedido
-      window.location.href = 'index.html'; // ou qualquer outra página principal do sistema
+      if (senha !== confirmaSenha) {
+        alert('As senhas não coincidem.');
+        return;
+      }
+
+      alert('Conta criada com sucesso!');
+      window.location.href = 'login.html'; // Redireciona para a tela de login
     }
   </script>
 
