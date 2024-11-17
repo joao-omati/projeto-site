@@ -3,16 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema</title>
+  <title>Troca Troca Transações</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
+      background-color: #002346;
       margin: 0;
+      padding: 0;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
+      flex-direction: column;
+    }
+
+    .header-global {
+      background-color: #004080;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    /* Seção para a logo */
+    .logo-container {
+      margin-top: 90px; /* Para afastar a logo do cabeçalho fixo */
+      margin-bottom: 30px; /* Espaço abaixo da logo */
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .logo {
+      width: 60px;  /* Ajuste o tamanho da logo */
+      height: auto;
     }
 
     .container {
@@ -23,6 +52,7 @@
       width: 100%;
       max-width: 400px;
       text-align: center;
+      z-index: 10;
     }
 
     .header {
@@ -81,6 +111,17 @@
 </head>
 <body>
 
+  <!-- Cabeçalho principal -->
+  <div class="header-global">
+    Troca Troca Transações
+  </div>
+
+  <!-- Logo centralizada entre o cabeçalho e o login -->
+  <div class="logo-container">
+    <img src="images/logo.png" alt="Troca Troca Logo" class="logo">
+  </div>
+
+  <!-- Conteúdo principal -->
   <div class="container">
     <div class="header">
       <h2>Login</h2>
@@ -111,10 +152,9 @@
         return;
       }
 
-      // Aqui você faria a validação com seu backend, por enquanto apenas uma mensagem de sucesso
+      // Simulação de validação
       alert('Login realizado com sucesso!');
-      // Redirecionar para a página principal após login bem-sucedido
-      window.location.href = 'index.html'; // ou qualquer outra página principal do sistema
+      window.location.href = 'dinheiro.html'; // Redireciona para a página de transações
     }
   </script>
 
