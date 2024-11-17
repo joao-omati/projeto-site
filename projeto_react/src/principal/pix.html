@@ -103,6 +103,53 @@
     .transacao-positivo {
       color: green;
     }
+
+    /* Estilo do pop-up */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      width: 300px;
+      text-align: center;
+    }
+
+    #popup .message {
+      margin-bottom: 15px;
+      font-size: 1.2em;
+    }
+
+    #popup button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #popup button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilo do fundo escurecido */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -151,6 +198,13 @@
     </div>
   </div>
 
+  <!-- Pop-up -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <div class="message" id="popup-message"></div>
+    <button onclick="fecharPopup()">Fechar</button>
+  </div>
+
   <script>
     let saldo = 0;
     let chavePixAdicionada = false;
@@ -186,13 +240,13 @@
       const tipoChave = document.getElementById('tipo-chave').value;
 
       if (!chavePix) {
-        alert("Por favor, insira uma chave Pix válida.");
+        mostrarPopup("Por favor, insira uma chave Pix válida.");
         return;
       }
 
       document.getElementById('chave-pix-salva').textContent = `Chave Pix (${tipoChave}): ${chavePix}`;
       document.getElementById('pix-info').style.display = 'block';
-      alert("Chave Pix adicionada com sucesso!");
+      mostrarPopup("Chave Pix adicionada com sucesso!");
 
       if (tipoChave === 'cpf') {
         chavePixCPF = chavePix;
@@ -216,26 +270,24 @@
       const valorAdicionar = parseFloat(document.getElementById('valor-adicionar').value);
 
       if (!chavePixAdicionada) {
-        alert("Por favor, adicione uma chave Pix primeiro.");
+        mostrarPopup("Por favor, adicione uma chave Pix primeiro.");
         return;
       }
 
       if (isNaN(valorAdicionar) || valorAdicionar <= 0) {
-        alert("Por favor, insira um valor válido.");
+        mostrarPopup("Por favor, insira um valor válido.");
         return;
       }
 
-      // Gera a chave Pix e exibe uma mensagem informando que o valor será adicionado em 10 segundos
       gerarChavePixAleatoria();
-      alert("Chave Pix gerada");
+      mostrarPopup("Chave Pix gerada");
 
-      // Adiciona o valor ao saldo após 10 segundos
       setTimeout(() => {
         saldo += valorAdicionar;
         adicionarTransacao(valorAdicionar, 'Adição de Saldo via Pix', 'transacao-positivo');
         atualizarSaldo();
 
-        alert(`Valor de R$${valorAdicionar.toFixed(2)} adicionado com sucesso!`);
+        mostrarPopup(`Valor de R$${valorAdicionar.toFixed(2)} adicionado com sucesso!`);
         document.getElementById('valor-adicionar').value = '';
       }, 10000); // 10 segundos
     }
@@ -256,6 +308,17 @@
       transacao.appendChild(valorTransacao);
 
       historicoTransacoes.prepend(transacao);
+    }
+
+    function mostrarPopup(mensagem) {
+      document.getElementById('popup-message').textContent = mensagem;
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    function fecharPopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
     }
 
     atualizarSaldo();
