@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #001f3f; /* Fundo azul escuro */
+      color: #f8f8f8; /* Texto claro para contraste */
       margin: 0;
       display: flex;
       align-items: center;
@@ -65,6 +66,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       background-color: #f8f9fa;
+      color: #333;
       cursor: pointer;
       transition: background-color 0.2s;
     }
@@ -110,7 +112,6 @@
     function cadastrarCartao(event) {
       event.preventDefault();
 
-      // Capturar informações do cartão
       const nome = document.getElementById("nomeCartao").value.trim();
       const numero = document.getElementById("numeroCartao").value.trim();
       const validade = document.getElementById("validadeCartao").value.trim();
@@ -121,11 +122,9 @@
         return;
       }
 
-      // Adicionar cartão à lista
       cartoesCadastrados.push({ nome, numero, validade });
       atualizarListaCartoes();
 
-      // Limpar formulário
       document.getElementById("nomeCartao").value = '';
       document.getElementById("numeroCartao").value = '';
       document.getElementById("validadeCartao").value = '';
@@ -138,11 +137,9 @@
       const cartoesDiv = document.getElementById("cartoes");
       const selectCartao = document.getElementById("cartaoSelecionado");
 
-      // Limpar exibição anterior
       cartoesDiv.innerHTML = "<p><strong>Cartões Cadastrados:</strong></p>";
       selectCartao.innerHTML = '<option value="" disabled selected>Selecione um cartão</option>';
 
-      // Adicionar cartões na lista e no select
       cartoesCadastrados.forEach((cartao, index) => {
         const p = document.createElement("p");
         p.textContent = `${cartao.nome} (**** **** **** ${cartao.numero.slice(-4)})`;
@@ -154,7 +151,6 @@
         selectCartao.appendChild(option);
       });
 
-      // Exibir formulário de adição de dinheiro se houver cartões
       document.getElementById("adicionarDinheiroForm").style.display = cartoesCadastrados.length > 0 ? "block" : "none";
     }
 

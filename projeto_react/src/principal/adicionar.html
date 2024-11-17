@@ -7,12 +7,13 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #001f3f; /* Fundo azul escuro */
       margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      color: #f8f8f8;
     }
     .container {
       background-color: #fff;
@@ -59,13 +60,22 @@
       transform: scale(0.98);
     }
     .option.cartao {
-      background-color: #007bff;
+      background-color: #6c5ce7; /* Nova cor para "Cartão" */
+    }
+    .option.cartao:hover {
+      background-color: #a29bfe;
     }
     .option.pix {
       background-color: #28a745;
     }
+    .option.pix:hover {
+      background-color: #4caf50;
+    }
     .option.boleto {
       background-color: #ffc107;
+    }
+    .option.boleto:hover {
+      background-color: #ffd54f;
     }
   </style>
 </head>

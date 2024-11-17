@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema Financeiro</title>
+  <title>Troca Troca TRansações</title>
   <style>
+    /* Estilos Globais */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #001f3f, #002d62);
+      color: #f8f8f8;
       margin: 0;
       padding: 0;
       display: flex;
@@ -17,62 +18,99 @@
       justify-content: center;
       height: 100vh;
     }
+    
+    /* Cabeçalho */
     .header {
       text-align: center;
       margin-bottom: 30px;
     }
+
     .header h2 {
-      color: #333;
-      font-size: 1.8em;
+      color: #f8f8f8;
+      font-size: 2em;
       margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+
+    .header p {
+      color: #d1d1d1;
+      font-size: 1em;
+      margin-top: 5px;
+    }
+
+    /* Contêiner de opções */
     .options-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
+
+    /* Botões de opção */
     .option {
-      background-color: #fff;
+      background-color: #ffffff;
       border: 2px solid #ddd;
       border-radius: 8px;
-      width: 150px;
-      height: 150px;
+      width: 180px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 1.1em;
+      font-size: 1.2em;
+      font-weight: bold;
       color: #333;
       text-decoration: none;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
     }
+
     .option:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     }
+
     .option:active {
-      transform: scale(0.98);
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .option.adicionar {
-      background-color: #4CAF50;
+      background-color: #27ae60;
       color: white;
+      border-color: #1e8449;
     }
+
+    .option.adicionar:hover {
+      background-color: #2ecc71;
+    }
+
     .option.retirar {
-      background-color: #f44336;
+      background-color: #e74c3c;
       color: white;
+      border-color: #c0392b;
     }
+
+    .option.retirar:hover {
+      background-color: #f67a6a;
+    }
+
     .option.saldo {
-      background-color: #2196F3;
+      background-color: #8e44ad;
       color: white;
+      border-color: #6c3483;
+    }
+
+    .option.saldo:hover {
+      background-color: #a569bd;
     }
   </style>
 </head>
 <body>
   <div class="header">
     <h2>Troca Troca Transações</h2>
-    <p>Escolha uma opção abaixo:</p>
+    <p>Gerencie suas transações com facilidade e segurança.</p>
   </div>
   <div class="options-container">
     <a href="adicionar.html" class="option adicionar">Adicionar Dinheiro</a>
