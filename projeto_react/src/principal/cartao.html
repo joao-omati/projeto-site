@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #002346; 
+      background: linear-gradient(to bottom, #001f3f, #096dd2);
       margin: 0;
       display: flex;
       align-items: center;
@@ -104,6 +104,14 @@
     }
     .modal button:hover {
       background-color: #0056b3;
+    }
+     /* Logo no canto inferior direito */
+     .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
     }
   </style>
 </head>
@@ -244,5 +252,7 @@
       mostrarModal(`R$${valor.toFixed(2)} será adicionado utilizando o cartão: ${cartao.nome}`);
     }
   </script>
+  <!-- Logo no canto inferior direito -->
+  <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>

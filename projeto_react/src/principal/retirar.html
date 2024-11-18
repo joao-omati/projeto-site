@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #002346;
+      background: linear-gradient(to bottom, #87b0d8, #096dd2);
       margin: 0;
       display: flex;
       align-items: center;
@@ -92,6 +92,14 @@
     .modal-error button:hover {
       background-color: #c0392b;
     }
+    /* Logo no canto inferior direito */
+    .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -107,17 +115,10 @@
     </form>
   </div>
 
-  <!-- Modal de Confirmação -->
-  <div class="modal" id="modalConfirmacao">
-    <div class="modal-content">
-      <h3>Retirada Confirmada!</h3>
-      <p id="mensagemConfirmacao"></p>
-      <button onclick="fecharModal()">Fechar</button>
-    </div>
-  </div>
+ 
 
-  <!-- Modal de Erro para CPF inválido -->
-  <div class="modal modal-error" id="modalErroCPF">
+  <!-- Modal de Erro para CPF inválido (Agora não é mais necessário) -->
+  <div class="modal modal-error" id="modalErroCPF" style="display:none;">
     <div class="modal-content">
       <h3>Erro</h3>
       <p>O CPF inserido é inválido. Por favor, insira um CPF válido.</p>
@@ -126,39 +127,6 @@
   </div>
 
   <script>
-    // Função para validar o CPF
-    function validarCPF(cpf) {
-      cpf = cpf.replace(/[^\d]+/g, ''); // Remove tudo que não for número
-
-      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-        return false; // Verifica se é um CPF com todos os números iguais
-      }
-
-      let soma = 0;
-      let resto;
-
-      // Validação do primeiro dígito verificador
-      for (let i = 1; i <= 9; i++) {
-        soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
-      }
-      resto = (soma * 10) % 11;
-      if ((resto === 10 || resto === 11) ? 0 : resto !== parseInt(cpf.charAt(9))) {
-        return false;
-      }
-
-      soma = 0;
-      // Validação do segundo dígito verificador
-      for (let i = 1; i <= 10; i++) {
-        soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
-      }
-      resto = (soma * 10) % 11;
-      if ((resto === 10 || resto === 11) ? 0 : resto !== parseInt(cpf.charAt(10))) {
-        return false;
-      }
-
-      return true; // CPF válido
-    }
-
     async function retirarDinheiro(event) {
       event.preventDefault();
 
@@ -167,13 +135,6 @@
 
       if (!chavePix) {
         alert("Por favor, insira sua chave PIX.");
-        return;
-      }
-
-      // Validação do CPF
-      if (!validarCPF(chavePix)) {
-        // Exibe o modal de erro para CPF inválido
-        document.getElementById('modalErroCPF').style.display = 'flex';
         return;
       }
 
@@ -216,5 +177,8 @@
       document.getElementById('modalErroCPF').style.display = 'none';
     }
   </script>
+   <!-- Logo no canto inferior direito -->
+   <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>
+

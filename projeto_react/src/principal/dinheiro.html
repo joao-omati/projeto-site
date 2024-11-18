@@ -8,7 +8,7 @@
     /* Estilos Globais */
     body {
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom, #001f3f, #002d62);
+      background: linear-gradient(to bottom, #001f3f, #096dd2);
       color: #f8f8f8;
       margin: 0;
       padding: 0;
@@ -17,6 +17,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      position: relative; /* Adiciona posição relativa para permitir o posicionamento absoluto da logo */
     }
 
     /* Cabeçalho */
@@ -104,6 +105,15 @@
     .option.saldo:hover {
       background-color: #a569bd;
     }
+
+    /* Logo no canto inferior direito */
+    .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -111,15 +121,18 @@
   <div class="modulo-azul-claro">
     <div class="header">
       <h2>Troca Troca Transações</h2>
-      <p>Gerencie suas transações com facilidade e segurança.</p>
     </div>
+    <p>Gerencie suas transações com facilidade e segurança.</p>
   </div>
 
   <!-- Contêiner de Botões -->
   <div class="options-container">
     <a href="adicionar.html" class="option adicionar">Adicionar Dinheiro</a>
     <a href="retirar.html" class="option retirar">Retirar Dinheiro</a>
-    <a href="saldo.html" class="option saldo">Consultar Saldo</a>
+    <a href="consultar.html" class="option saldo">Consultar Saldo</a>
   </div>
+
+  <!-- Logo no canto inferior direito -->
+  <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>

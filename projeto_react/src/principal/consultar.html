@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Saldo e Histórico</title>
+  <style>
+    /* Estilos Globais */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #002d62, #92abbc);
+      color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .header {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .header h2 {
+      color: #f5f5f5;
+      font-size: 2em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .header p {
+      color: #eff3f3;
+      font-size: 1em;
+      margin-top: 5px;
+    }
+
+    /* Seção de saldo */
+    .saldo-section {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .saldo-section h3 {
+      color: #2ecc71;
+      font-size: 2em;
+      margin: 0;
+    }
+
+    .saldo-section p {
+      font-size: 1.5em;
+      color: #f1c40f;
+      margin: 5px 0;
+    }
+
+    /* Histórico de transações */
+    .historico-section {
+      width: 100%;
+      max-width: 800px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .historico-section h3 {
+      color: #34495e;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #34495e;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .tipo-transacao {
+      font-weight: bold;
+    }
+      /* Logo no canto inferior direito */
+      .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>Consulta de Saldo e Histórico</h2>
+    <p>Confira seu saldo e o histórico de transações.</p>
+  </div>
+
+  <!-- Seção de Saldo -->
+  <div class="saldo-section">
+    <h3>Saldo Atual</h3>
+    <p>R$ 1.500,50</p> <!-- Aqui pode ser dinamicamente preenchido com o saldo atual -->
+  </div>
+
+  <!-- Seção de Histórico de Transações -->
+  <div class="historico-section">
+    <h3>Histórico de Transações</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Valor (R$)</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Exemplo de transações, em uma aplicação real esses dados seriam gerados dinamicamente -->
+        <tr>
+          <td>10/11/2024</td>
+          <td>Pagamento via PIX</td>
+          <td>R$ 200,00</td>
+          <td class="tipo-transacao">PIX</td>
+        </tr>
+        <tr>
+          <td>09/11/2024</td>
+          <td>Pagamento via Cartão</td>
+          <td>R$ 150,00</td>
+          <td class="tipo-transacao">Cartão</td>
+        </tr>
+        <tr>
+          <td>08/11/2024</td>
+          <td>Pagamento via Boleto</td>
+          <td>R$ 450,00</td>
+          <td class="tipo-transacao">Boleto</td>
+        </tr>
+        <tr>
+          <td>07/11/2024</td>
+          <td>Depósito via PIX</td>
+          <td>R$ 1.000,00</td>
+          <td class="tipo-transacao">PIX</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
+</body>
+</html>

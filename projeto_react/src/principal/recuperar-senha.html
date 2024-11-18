@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color:  #002346;
+      background-color: #03386e;
       margin: 0;
       display: flex;
       align-items: center;
@@ -62,7 +62,14 @@
     button:hover {
       background-color: #0056b3;
     }
-
+    /* Logo no canto inferior direito */
+    .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
+    }
     .footer {
       margin-top: 20px;
       font-size: 0.9em;
@@ -162,6 +169,6 @@
       return true;
     }
   </script>
-
+   <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>

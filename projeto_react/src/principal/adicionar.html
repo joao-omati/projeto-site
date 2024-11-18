@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #001f3f;
+      background-color: #0a4178;
       margin: 0;
       display: flex;
       align-items: center;
@@ -77,6 +77,15 @@
     .option.boleto:hover {
       background-color: #ffd54f;
     }
+
+     /* Logo no canto inferior direito */
+     .logo {
+      position: absolute;
+      bottom: 20px; /* Distância do fundo */
+      right: 20px; /* Distância da lateral direita */
+      width: 300px; /* Define o tamanho da logo */
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -91,5 +100,7 @@
       <a href="boleto.html" class="option boleto">Boleto</a>
     </div>
   </div>
+  <!-- Logo no canto inferior direito -->
+  <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>
