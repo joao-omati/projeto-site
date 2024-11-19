@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastrar Nova Conta</title>
   <style>
+    /* Mesmos estilos já existentes */
     body {
       font-family: Arial, sans-serif;
       background-color: #03386e;
@@ -77,54 +78,6 @@
     .footer a:hover {
       text-decoration: underline;
     }
-
-    /* Estilos para o pop-up */
-    .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .popup {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-    }
-
-    .popup button {
-      background-color: #28a745;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1em;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .popup button:hover {
-      background-color: #218838;
-    }
-
-    /* Logo no canto inferior direito */
-    .logo {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 300px;
-      height: auto;
-    }
   </style>
 </head>
 <body>
@@ -136,6 +89,7 @@
     </div>
 
     <form onsubmit="cadastrarConta(event)">
+      <input type="text" id="usuario" placeholder="Usuário" required>
       <input type="text" id="cpf" placeholder="CPF" required>
       <input type="text" id="nome" placeholder="Nome Completo" required>
       <input type="email" id="email" placeholder="E-mail" required>
@@ -149,82 +103,62 @@
     </div>
   </div>
 
-  <!-- Pop-up -->
-  <div class="popup-overlay" id="popup-overlay">
-    <div class="popup">
-      <p id="popup-message"></p>
-      <button onclick="fecharPopup()">Fechar</button>
-    </div>
-  </div>
-
   <script>
     const apiURL = 'http://localhost:5015/api/user/new-account'; // Define a URL da API
 
-    // Função de cadastro (POST)
     async function cadastrarConta(event) {
       event.preventDefault();
 
+      const username = document.getElementById('usuario').value.trim();
+      const cpf = document.getElementById('cpf').value.trim();
       const nome = document.getElementById('nome').value.trim();
       const email = document.getElementById('email').value.trim();
-      const senha = document.getElementById('senha').value.trim();
+      const password = document.getElementById('senha').value.trim();
       const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
-      const cpf = document.getElementById('cpf').value.trim();
 
-      if (!nome || !email || !senha || !confirmaSenha || !cpf) {
-        exibirPopup('Por favor, preencha todos os campos.');
+      if (!username || !cpf || !nome || !email || !password || !confirmaSenha) {
+        alert('Por favor, preencha todos os campos.');
         return;
       }
 
-      if (senha !== confirmaSenha) {
-        exibirPopup('As senhas não coincidem.');
+      if (password !== confirmaSenha) {
+        alert('As senhas não coincidem.');
         return;
       }
 
       const dados = {
+        username: username,
+        cpf: cpf,
         nome: nome,
         email: email,
-        senha: senha,
-        cpf: cpf
+        password: password,
       };
 
       try {
-        const resposta = await fetch(apiURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dados)
+        const response = await fetch('http://localhost:5015/api/user/new-account', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                client: { cpf, name, phone, email, address },
+                user: { username, password }
+            })
+            credentials: 'include',
+        });
         });
 
         const resultado = await resposta.json();
 
         if (resposta.ok) {
-          exibirPopup(resultado.message);
-          setTimeout(() => {
-            window.location.href = 'login.html'; // Redireciona para a tela de login
-          }, 2000);
+          alert('Conta criada com sucesso!');
+          window.location.href = 'login.html';
         } else {
-          exibirPopup(resultado.message);
+          alert(`Erro: ${resultado.message}`);
         }
       } catch (erro) {
         console.error('Erro ao cadastrar:', erro);
-        exibirPopup('Ocorreu um erro ao tentar cadastrar sua conta.');
+        alert('Ocorreu um erro ao tentar cadastrar sua conta.');
       }
     }
-
-    // Função para exibir o pop-up
-    function exibirPopup(mensagem) {
-      document.getElementById('popup-message').textContent = mensagem;
-      document.getElementById('popup-overlay').style.display = 'flex';
-    }
-
-    // Função para fechar o pop-up
-    function fecharPopup() {
-      document.getElementById('popup-overlay').style.display = 'none';
-    }
   </script>
-
-  <!-- Logo no canto inferior direito -->
-  <img src="./../images/logo.jpg" alt="Troca Troca Logo" class="logo">
 </body>
 </html>
